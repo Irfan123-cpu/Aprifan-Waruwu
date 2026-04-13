@@ -3,16 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// Pastikan nama model konsisten. Biasanya Laravel menggunakan singular (Destination)
-// Saya sesuaikan dengan kode Anda yang menggunakan Destinations
+
 use App\Models\Destinations; 
 
 class DestinationController extends Controller
 {
-    public function index()
-    {
-        $destinations = Destinations::all();
-        return view('pages.indexDestinations', compact('destinations'));
+    public function index(Request $request){
+
+    $keyword = $request->input('search');
+    if ($keyword !=''){
+        $destinations = Destinations::where('name','LIKE', '%' . $keyword . '%')->paginate(5);
+    }else {
+        $destinations = Destinations::orderby('id')->paginate(5);
+    }
+    return view('pages.indexDestinations', compact('destinations'));
+    
+    
     }
 
     public function show($id)
