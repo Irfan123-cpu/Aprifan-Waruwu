@@ -26,19 +26,19 @@ class UserController extends Controller
 
         $users = $users->paginate(50);
         
-        return view('pages.indexuser', compact('users'));
+        return view('pages..users.indexuser', compact('users'));
     }
 
     public function show($id)
     {
         $user = User::findOrFail($id);
         
-        return view('pages.detailUsers', compact('user'));
+        return view('pages..users.detailUsers', compact('user'));
     }
 
     public function create()
     {
-        return view('pages.createuser');
+        return view('pages..users.createuser');
     }
 
     public function store(Request $request)
@@ -59,7 +59,7 @@ class UserController extends Controller
         return redirect('/users')->with('success', 'User created successfully.');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
@@ -69,7 +69,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('pages.edituser', compact('user'));
+        return view('pages.users.edituser', compact('user'));
     }
 
     public function update(Request $request, $id)

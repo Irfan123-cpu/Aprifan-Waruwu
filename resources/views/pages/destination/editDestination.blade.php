@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="/destinations" method="post">
+<form action="{{ route('destinations.store') }}" method="post">
     @csrf
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="floatingInputName" placeholder="Alam Mayang" name="name" value="{{ $destination->name }}">

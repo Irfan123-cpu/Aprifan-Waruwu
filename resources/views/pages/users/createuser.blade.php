@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            <form action="/users" method="post">
+            <form action={{ route('users.create') }} method="post">
                 @csrf
                 
                 
@@ -50,8 +50,7 @@
                     @enderror
                 </div>
 
-           
-                <div class="form-floating mb-3">
+           <div class="form-floating mb-3">
                     <input type="password" 
                            class="form-control @error('password') is-invalid @enderror" 
                            id="floatingPassword" 
@@ -64,6 +63,7 @@
                     @enderror
                 </div>
 
+                
          
                 <div class="form-floating mb-3">
                     <input type="password" 

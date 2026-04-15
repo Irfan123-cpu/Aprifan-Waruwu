@@ -5,10 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-sm">
+           
                 <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Detail Profil User</h5>
-                    <a href="/users" class="btn btn-sm btn-light"> Kembali</a>
+                    
+                    <a href="{{ route('users.index') }}" class="btn btn-sm btn-light"> Kembali</a>
                 </div>
+
                 <div class="card-body">
                     <div class="row mb-3">
                         <label class="col-sm-3 fw-bold">ID User</label>
@@ -31,21 +34,26 @@
                         </div>
                     </div>
 
+                  
                     <div class="row mb-3">
-                        <label class="col-sm-3 fw-bold">Password</label>
+                        <label class="col-sm-3 fw-bold">Status Akun</label>
                         <div class="col-sm-9">
-                            <p class="form-control-plaintext">{{ $user->password }}</p>
+                            <p class="form-control-plaintext text-success">
+                                <i class="bi bi-check-circle-fill"></i> Terverifikasi
+                            </p>
                         </div>
                     </div>
 
                     <hr>
 
                     <div class="d-flex justify-content-end gap-2">
-                        <a href="/users/{{ $user->id }}/edit" class="btn btn-warning">
+                        
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">
                              Edit Data
                         </a>
                         
-                        <form action="/users/{{ $user->id }}" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                     
+                        <form action="{{ route('users.destroy', $user->id) }}" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Hapus Akun</button>
@@ -55,19 +63,19 @@
             </div>
         </div>
     </div>
-</div><style>
-    /* Menjaga tampilan agar mirip dengan vibe "Pariwisata By Aprifan" */
+</div>
+
+<style>
     body {
         background-color: #f8f9fa;
         font-family: 'Inter', sans-serif;
     }
-    .table th {
-        font-weight: 600;
-        color: #495057;
+    .card {
+        border-radius: 12px;
+        border: none;
     }
-    .breadcrumb-item a {
-        color: #0d6efd;
-        text-decoration: none;
+    .card-header {
+        border-radius: 12px 12px 0 0 !important;
     }
 </style>
 @endsection
