@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            <form action={{ route('users.create') }} method="post">
+            <form action={{ route('users.store') }} method="post">
                 @csrf
                 
                 
@@ -28,12 +28,12 @@
                            placeholder="Nama Lengkap" 
                            name="name" 
                            value="{{ old('name') }}" 
-                           required>
-                    <label for="floatingInputName">Name</label>
-                    @error('name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                           required class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
+                           @error('name')
+                             <div class="invalid-feedback">{{ $message }}</div>
+                             @enderror
+                 <label for="floatingInputName">Name</label>
+                    </div>
 
                 
                 <div class="form-floating mb-3">
@@ -43,11 +43,12 @@
                            placeholder="Email" 
                            name="email" 
                            value="{{ old('email') }}" 
-                           required>
-                    <label for="floatingInputEmail">Email</label>
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                           required class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
+                           @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                         @enderror
+             <label for="floatingInputEmail">Email</label>
+                   
                 </div>
 
            <div class="form-floating mb-3">
@@ -56,12 +57,12 @@
                            id="floatingPassword" 
                            placeholder="Password" 
                            name="password" 
-                           required>
-                    <label for="floatingPassword">Password</label>
-                    @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                           required class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
+                    @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                    <label for="floatingPassword">Password</label>
+                   </div>
 
                 
          

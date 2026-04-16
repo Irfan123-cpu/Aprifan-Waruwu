@@ -24,7 +24,7 @@ class UserController extends Controller
             $users->orderBy('id', 'desc'); // Urutkan dari yang terbaru
         }
 
-        $users = $users->paginate(50);
+        $users = $users->paginate(15);
         
         return view('pages..users.indexuser', compact('users'));
     }
@@ -44,18 +44,12 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
-     
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password), 
-        ]);
-
+        
         return redirect('/users')->with('success', 'User created successfully.');
     }
 

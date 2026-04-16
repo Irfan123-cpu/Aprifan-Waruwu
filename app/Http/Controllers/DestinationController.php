@@ -36,9 +36,13 @@ class DestinationController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required',
+            'description' => 'required',
             'location' => 'required',
+            'working_days' => 'required',
+            'working_hours' => 'required',
+            'ticket_price' => 'required',
         ]);
 
         Destinations::create($request->all());

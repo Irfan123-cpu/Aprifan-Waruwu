@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Attraction;
+use App\Models\Destinations;
 
 class AttractionController extends Controller
 {
@@ -22,7 +23,7 @@ class AttractionController extends Controller
             $attraction->orderBy('id', 'desc');
         }
 
-        $attraction = $attraction->paginate(10);
+        $attraction = $attraction->paginate(15);
         
         return view('pages.attraction.indexattraction', compact('attraction'));
     }
@@ -35,28 +36,29 @@ class AttractionController extends Controller
 
     public function create()
     {
-        return view('pages.attraction.createattraction');
+        $destinations = Destinations::all();
+        return view('pages.attraction.createattraction', compact('destinations'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
+      $validated = $request->validate(
+            [
+            'destination_id' => 'required',
+            'name' => 'required',
+            'description' => 'nullable',
         ]);
 
-        Attraction::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        Attraction::create($validated);
 
         return redirect()->route('attraction.index')->with('success', 'Atraksi berhasil ditambahkan.');
     }
 
     public function edit($id)
-    {
+    {   
+        $destinations = Destinations::all();
         $attraction = Attraction::findOrFail($id);
-        return view('pages.attraction.edit', compact('attraction'));
+        return view('pages.attraction.editattraction', compact('attraction', 'destinations'));
     }
 
     public function update(Request $request, $id)
@@ -66,6 +68,7 @@ class AttractionController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'destination_id'=>'required ',
         ]);
 
         $attraction->update([
@@ -73,7 +76,7 @@ class AttractionController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('attractions.index')->with('success', 'Atraksi berhasil diperbarui.');
+        return redirect()->route('attraction.index')->with('success', 'Atraksi berhasil diperbarui.');
     }
 
     public function destroy($id)
