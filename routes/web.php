@@ -82,5 +82,10 @@ Route::controller(AttractionController::class)->prefix('attraction')->name('attr
     Route::get('/{id}', 'show')->name('show');
 });
 
+Route::resource( 'attraction', \App\Http\Controllers\AttractionController::class);
+
+
+Route::resource('review', \App\Http\Controllers\ReviewController::class);
+
 
 

@@ -15,6 +15,7 @@ class Destinations extends Model
         'working_days',
         'working_hours',
         'ticket_price',
+        'image',
     ];
 
 

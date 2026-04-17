@@ -2,57 +2,132 @@
 
 @section('content')
 
-  @if($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
+<div class="container mt-4">
+
+    {{-- Error --}}
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
                 @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
+                    <li>{{ $error }}</li>
                 @endforeach
-        </ul>
-    </div> 
+            </ul>
+        </div> 
     @endif
-<form action="{{ route('destinations.store') }}" method="post">
-    @csrf
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInputName" placeholder="Alam Mayang" name="name" value="{{ $destination->name }}" class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
-         @error('name')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-        <label for="floatingInputName">Name Destinasi</label>
-    </div>
-    <div class="form-floating mb-3">
-    <textarea name="description" id="" class="form-control" placeholder="Description">{{ $destination->description }}</textarea>
-    <label for="description">Description</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingLocation" placeholder="Pekanbaru" name="location"value="{{ $destination->location }}" class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
-        <label for="floatingLocation">Lokasi</label>
-           @error('name')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-    <div class="form-floating mb-3">
-        <input type="number" class="form-control" id="floatingPrice" placeholder="20000" name="ticket_price"value="{{ $destination->ticket_price }}" class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
-         @error('name')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-        <label for="floatingPrice">Harga Tiket</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingHours" placeholder="08.00 - 17.00" name="working_hours"value="{{ $destination->working_hours }}" class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
-         @error('name')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-        <label for="floatingHours">Jam Operasional</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingDays" placeholder="Setiap Hari" name="working_days"value="{{ $destination->working_days }}" class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
+
+    <form action="{{ route('destinations.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+
+        {{-- Gambar --}}
+        <div class="mb-3">
+            <label class="form-label">Gambar Destinasi</label>
+            <input type="file" 
+                   name="image" 
+                   class="form-control @error('image') is-invalid @enderror" 
+                   accept="image/*">
+            
+            @error('image')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        {{-- Nama --}}
+        <div class="form-floating mb-3">
+            <input type="text" 
+                   name="name" 
+                   class="form-control @error('name') is-invalid @enderror"
+                   id="floatingName"
+                   placeholder="Nama Destinasi"
+                   value="{{ old('name') }}" 
+                   required>
+            <label for="floatingName">Nama Destinasi</label>
+
             @error('name')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-        <label for="floatingDays">Hari Operasional</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        {{-- Deskripsi --}}
+        <div class="form-floating mb-3">
+            <textarea name="description" 
+                      class="form-control @error('description') is-invalid @enderror"
+                      id="floatingDescription"
+                      placeholder="Deskripsi"
+                      style="height: 150px"
+                      required>{{ old('description') }}</textarea>
+            <label for="floatingDescription">Deskripsi</label>
+
+            @error('description')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        {{-- Lokasi --}}
+        <div class="form-floating mb-3">
+            <input type="text" 
+                   name="location" 
+                   class="form-control @error('location') is-invalid @enderror"
+                   id="floatingLocation"
+                   placeholder="Lokasi"
+                   value="{{ old('location') }}" 
+                   required>
+            <label for="floatingLocation">Lokasi</label>
+
+            @error('location')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        {{-- Harga --}}
+        <div class="form-floating mb-3">
+            <input type="number" 
+                   name="ticket_price" 
+                   class="form-control @error('ticket_price') is-invalid @enderror"
+                   id="floatingPrice"
+                   placeholder="Harga"
+                   value="{{ old('ticket_price') }}" 
+                   required>
+            <label for="floatingPrice">Harga Tiket</label>
+
+            @error('ticket_price')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        {{-- Jam --}}
+        <div class="form-floating mb-3">
+            <input type="text" 
+                   name="working_hours" 
+                   class="form-control @error('working_hours') is-invalid @enderror"
+                   id="floatingHours"
+                   placeholder="Jam Operasional"
+                   value="{{ old('working_hours') }}" 
+                   required>
+            <label for="floatingHours">Jam Operasional</label>
+
+            @error('working_hours')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        {{-- Hari --}}
+        <div class="form-floating mb-3">
+            <input type="text" 
+                   name="working_days" 
+                   class="form-control @error('working_days') is-invalid @enderror"
+                   id="floatingDays"
+                   placeholder="Hari Operasional"
+                   value="{{ old('working_days') }}" 
+                   required>
+            <label for="floatingDays">Hari Operasional</label>
+
+            @error('working_days')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary">Simpan</button>
+    </form>
+
+</div>
 @endsection
-        

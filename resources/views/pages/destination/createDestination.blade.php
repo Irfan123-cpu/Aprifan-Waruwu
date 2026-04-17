@@ -13,6 +13,17 @@
     @endif
 
 <form action="{{ route('destinations.store') }}" method="POST">
+
+
+    <div class="form-floating mb-3">
+        <input type="file" class="from-control" id="floatingInput" placeholder="Image" name+"image" value="{{
+        old('image')}}" accept="=".jpg.jpeg.png">
+        <label for="floatingInput">Gambar Destinasi</label>
+        @error('image')
+        <div class="invalid-feedback">{{ $message }}</div>
+            
+        @enderror
+    </div>
     @csrf
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="floatingInputName" placeholder="Alam Mayang" name="name" class="from-control @error('name') is-invalid @enderror"value="{{old('name')}}" required>
