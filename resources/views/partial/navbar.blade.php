@@ -54,7 +54,10 @@
       <a href="#" class="btn btn-outline-light btn-sm rounded-pill">
         Login
       </a>
-
+      <form action="{{ route('logout') }}" method="POST">
+      @csrf
+      <a href="#" class="btn btn-outline-light btn-sm rounded-pill">
+        Logout</a>
     </div>
   </div>
 </nav>

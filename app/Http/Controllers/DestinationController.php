@@ -46,15 +46,14 @@ class DestinationController extends Controller
             'image' => 'nullable|image|max:2048|mimes:jpg,jpeg,png',
         ]);
 
-  
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
             $validated['image'] = basename($imagePath);
         }
+         Destinations::create($validated);
 
-        Destinations::create($validated);
-
-        return redirect('/destination')->with('success', 'Destination created successfully.');
+        return redirect()->route('destinations.index')->with('success', 'Destination created successfully.');
     }
 
     public function edit($id)
@@ -65,7 +64,7 @@ class DestinationController extends Controller
 
     public function update(Request $request, $id)
     {
-        $destination = Destinations::findOrFail($id);
+        $destinations = Destinations::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required',
@@ -77,33 +76,31 @@ class DestinationController extends Controller
             'image' => 'nullable|image|max:2048|mimes:jpg,jpeg,png',
         ]);
 
-       
+
         if ($request->hasFile('image')) {
-            if ($destination->image) {
-                Storage::disk('public')->delete('images/' . $destination->image);
+            if ($destinations->image) {
+                Storage::disk('public')->delete('images/' . $destinations->image);
             }
 
             $imagePath = $request->file('image')->store('images', 'public');
             $validated['image'] = basename($imagePath);
         }
 
-        $destination->update($validated);
+        $destinations->update($validated);
 
-        return redirect('/destinations')->with('success', 'Destination updated successfully.');
-    }   else {
-          return redirect('/destinations')->with('error', 'Destination not found')
+        return redirect()->route('destinations.index')->with('success', 'Destination updated successfully.');
     }
 
     public function destroy($id)
     {
-        $destination = Destinations::findOrFail($id);
+        $destinations = Destinations::findOrFail($id);
 
-        if ($destination->image) {
-            Storage::disk('public')->delete('images/' . $destination->image);
+        if ($destinations->image) {
+            Storage::disk('public')->delete('images/' . $destinations->image);
         }
 
-        $destination->delete();
 
-        return redirect('/destinations')->with('success', 'Destination deleted successfully.');
+    $destinations->delete();
+        return redirect()->route('destinations.index')->with('success', 'Destination deleted successfully.');
     }
 }

@@ -4,7 +4,6 @@
 
 <div class="container mt-4">
 
-    {{-- Error --}}
     @if($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -15,12 +14,20 @@
         </div> 
     @endif
 
-    <form action="{{ route('destinations.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('destinations.update', $destination->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
 
-        {{-- Gambar --}}
+      
         <div class="mb-3">
             <label class="form-label">Gambar Destinasi</label>
+
+            @if($destination->image)
+                <div class="mb-2">
+                    <img src="{{ asset('storage/images/' . $destination->image) }}" width="120">
+                </div>
+            @endif
+
             <input type="file" 
                    name="image" 
                    class="form-control @error('image') is-invalid @enderror" 
@@ -38,7 +45,7 @@
                    class="form-control @error('name') is-invalid @enderror"
                    id="floatingName"
                    placeholder="Nama Destinasi"
-                   value="{{ old('name') }}" 
+                   value="{{ old('name', $destination->name) }}" 
                    required>
             <label for="floatingName">Nama Destinasi</label>
 
@@ -47,14 +54,14 @@
             @enderror
         </div>
 
-        {{-- Deskripsi --}}
+
         <div class="form-floating mb-3">
             <textarea name="description" 
                       class="form-control @error('description') is-invalid @enderror"
                       id="floatingDescription"
                       placeholder="Deskripsi"
                       style="height: 150px"
-                      required>{{ old('description') }}</textarea>
+                      required>{{ old('description', $destination->description) }}</textarea>
             <label for="floatingDescription">Deskripsi</label>
 
             @error('description')
@@ -62,14 +69,14 @@
             @enderror
         </div>
 
-        {{-- Lokasi --}}
+
         <div class="form-floating mb-3">
             <input type="text" 
                    name="location" 
                    class="form-control @error('location') is-invalid @enderror"
                    id="floatingLocation"
                    placeholder="Lokasi"
-                   value="{{ old('location') }}" 
+                   value="{{ old('location', $destination->location) }}" 
                    required>
             <label for="floatingLocation">Lokasi</label>
 
@@ -78,14 +85,14 @@
             @enderror
         </div>
 
-        {{-- Harga --}}
+
         <div class="form-floating mb-3">
             <input type="number" 
                    name="ticket_price" 
                    class="form-control @error('ticket_price') is-invalid @enderror"
                    id="floatingPrice"
                    placeholder="Harga"
-                   value="{{ old('ticket_price') }}" 
+                   value="{{ old('ticket_price', $destination->ticket_price) }}" 
                    required>
             <label for="floatingPrice">Harga Tiket</label>
 
@@ -94,14 +101,14 @@
             @enderror
         </div>
 
-        {{-- Jam --}}
+
         <div class="form-floating mb-3">
             <input type="text" 
                    name="working_hours" 
                    class="form-control @error('working_hours') is-invalid @enderror"
                    id="floatingHours"
                    placeholder="Jam Operasional"
-                   value="{{ old('working_hours') }}" 
+                   value="{{ old('working_hours', $destination->working_hours) }}" 
                    required>
             <label for="floatingHours">Jam Operasional</label>
 
@@ -110,14 +117,14 @@
             @enderror
         </div>
 
-        {{-- Hari --}}
+  
         <div class="form-floating mb-3">
             <input type="text" 
                    name="working_days" 
                    class="form-control @error('working_days') is-invalid @enderror"
                    id="floatingDays"
                    placeholder="Hari Operasional"
-                   value="{{ old('working_days') }}" 
+                   value="{{ old('working_days', $destination->working_days) }}" 
                    required>
             <label for="floatingDays">Hari Operasional</label>
 
@@ -126,7 +133,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
 
 </div>

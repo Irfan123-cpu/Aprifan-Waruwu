@@ -8,6 +8,14 @@ use App\Models\Attraction;
 use App\Http\AttractionControllers;
 use App\Http\Controllers\AttractionController;
 
+require __DIR__ . '/auth.php';
+
+Route::get('dashboard', function () {
+    return redirect()->route('destinations.index');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -49,7 +57,7 @@ Route::get('/destinasi', action: function () {
 
 
 // Destinations
-Route::controller(DestinationController::class)->prefix('destinations')->name('destinations.')->group(function () {
+Route::controller(DestinationController::class)->prefix('destinations')->name('destinations.')->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/', 'store')->name('store');
@@ -86,6 +94,3 @@ Route::resource( 'attraction', \App\Http\Controllers\AttractionController::class
 
 
 Route::resource('review', \App\Http\Controllers\ReviewController::class);
-
-
-
